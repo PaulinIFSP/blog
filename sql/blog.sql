@@ -19,6 +19,7 @@ create table post(
 id        int		not null  auto_increment,
 titulo     varchar(255)		not null,
 texto  	text		not null,
+usuario_id int not null,
 data_criacao  	datetime		not null	default current_timestamp,
 data_postagem  	datetime   	not null,
 primary key (id),
