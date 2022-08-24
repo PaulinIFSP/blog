@@ -31,5 +31,38 @@ switch($acao){
         );
 
         break;
+        case 'update':
+            $dados = [
+                'titulo'        => $titulo,
+                'texto'         => $texto,
+                'data_postagem' => "$data_postagem $hora_postagem",
+                'usuario_id'    => $_SESSION['login']['usuario']['id']
+            ];
+
+            $criterio = [
+                ['id', '=', $id]
+            ];
+
+            atualiza(
+                'post',
+                $dados,
+                $criterio
+            );
+
+            break;
+        case 'delete':
+            $criterio = [
+                ['id', '=', $id]
+            ];
+
+            deleta(
+                'post',
+                $criterio
+            );
+
+            break;
 }
+
+header('Location: ../index.php');
+
 ?>
