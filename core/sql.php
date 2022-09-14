@@ -1,71 +1,72 @@
 <?php
 
-    function insert(string $entidade, array $dados) : string
-    {
-        $instrucao = "INSERT INTO {$entidade}";
+function insert (string $entidade, array $dados) : string
+{
+    $instrucao = "INSERT INTO {$entidade}";
 
-        $campos = implode(', ', array_keys($dados));
-        $valores = implode(', ', array_values($dados));
+    $campos = implode(', ', array_keys($dados));
+    $valores = implode(', ', array_values($dados));
 
-        $instrucao .= " ({$campos})";
-        $instrucao .= " VALUES ({$valores})";
+    $instrucao .= " ({$campos}) ";
+    $instrucao .= " VALUES ({$valores}) ";
 
-        return $instrucao;
+    return $instrucao;
+}
+
+function update (string $entidade, array $dados, array $criterio = []) : string
+{
+    $instrucao = "UPDATE {$entidade}";
+
+    foreach ($dados as $campos => $dado) {
+        $set[] = "{$campos} = {$dado}";
     }
 
-    function update(string $entidade, array $dados, array $criterio = []) : string
-    {
-        $instrucao = "UPDATE {$entidade}";
+    $instrucao .= ' SET ' . implode(',', $set);
 
-        foreach($dados as $campos => $dados){
-            $set[] = "{$campos} = {$dados}";
+    if (!empty($criterio)) {
+        $instrucao .= ' WHERE ';
+
+        foreach ($criterio as $expressao) {
+            $instrucao .= ' ' . implode(' ', $expressao);
         }
-
-        $instrucao .= ' SET ' . implode(', ', $set) ;
-
-        if(!empty($criterio)){
-            $instrucao .= ' WHERE ';
-
-            foreach($criterio as $expressao){
-                $instrucao .= ' ' . implode(' ', $expressao);
-            }
-        }
-
-        return $instrucao;
     }
 
-    function delete(string $entidade, array $criterio = []) : string
-    {
-        $instrucao = "DELETE {$entidade}";
+    return $instrucao;
+}
 
-        if(!empty($criterio)) {
-            $instrucao .= ' WHERE ';
+function delete (string $entidade, array $criterio = []) : string
+{
+    $instrucao = "DELETE {$entidade}";
 
-            foreach($criterio as $expressao) {
-                $instrucao .= ' ' . implode(' ', $expressao);
-            }
+    if (!empty($criterio)) {
+        $instrucao .= ' WHERE ';
+
+        foreach ($criterio as $expressao) {
+            $instrucao .= ' ' . implode(' ', $expressao);
         }
-
-        return $instrucao;
     }
 
-    function select(string $entidade, array $campos, array $criterio = [], string $ordem = null) : string
-    {
-        $instrucao = "SELECT " . implode(', ' ,$campos);
-        $instrucao .= " FROM {$entidade}";
+    return $instrucao;
+}    
 
-        if(!empty($criterio)){
-            $instrucao .= ' WHERE ';
+function select (string $entidade, array $campos, array $criterio = [],
+string $ordem = null) : string
+{
+    $instrucao = "SELECT " . implode(', ', $campos);
+    $instrucao .= " FROM {$entidade}";
 
-            foreach($criterio as $expressao){
-                $instrucao .= ' ' . implode(' ', $expressao);
-            }
+    if (!empty($criterio)) {
+        $instrucao .= ' WHERE ';
+
+        foreach ($criterio as $expressao) {
+            $instrucao .= ' ' . implode(' ', $expressao);
         }
-
-        if(!empty($ordem)){
-            $instrucao .= " ORDER BY $ordem ";
-        }
-
-        return $instrucao;
     }
+
+    if (!empty($ordem)) {
+        $instrucao .= " ORDER BY $ordem ";
+    }
+
+    return $instrucao;
+}
 ?>
