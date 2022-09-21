@@ -49,9 +49,9 @@
                     ?>
                     <h2>Post</h2>
                     <form method="post" action="core/post_repositorio.php">
-                        <input type="hidden" name"acao"
+                        <input type="hidden" name="acao"
                                 value="<?php echo empty($id) ? 'insert' : 'update' ?>">
-                        <input type="hidden" name"id"
+                        <input type="hidden" name="id"
                                 value="<?php $entidade[$id] ?? '' ?>">
                         <div class="form-group">
                             <label for="titulo">Título</label>
