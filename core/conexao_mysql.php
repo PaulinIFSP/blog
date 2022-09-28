@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set('America/Sao_Paulo');
 function conecta() : mysqli
 {
     $servidor = 'localhost';
@@ -8,6 +8,7 @@ function conecta() : mysqli
     $usuario = 'root';
     $senha = '';
     $conexao = mysqli_connect($servidor, $usuario, $senha, $banco, $port);
+    
 
     if(!$conexao){
         echo 'Erro: Não foi possível conectar ao MySql.' . PHP_EOL;
